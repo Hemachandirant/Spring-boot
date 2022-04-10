@@ -1,4 +1,4 @@
-package com.simplilearn.webapp.entity;
+package com.simplilearn.webservice.entity;
 
 public class Customer {
 	

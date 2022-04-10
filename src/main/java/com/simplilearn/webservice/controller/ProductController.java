@@ -1,4 +1,4 @@
-package com.simplilearn.webapp.controller;
+package com.simplilearn.webservice.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.simplilearn.webapp.entity.Product;
+import com.simplilearn.webservice.entity.Product;
+import com.simplilearn.webservice.exception.InvalidProductException;
+import com.simplilearn.webservice.exception.ProductNotFound;
 
 @RestController
 public class ProductController {
@@ -35,7 +37,7 @@ public class ProductController {
 			
 		}
 		
-		return null;
+		throw new ProductNotFound("Product not found with given id"+id);
 	}
 	@RequestMapping(value="/product",method = RequestMethod.GET)
 	public Product getProduct(@RequestParam("name") String name) {
@@ -45,7 +47,7 @@ public class ProductController {
 			}
 			
 		}
-		return null;
+		throw new ProductNotFound("Product not found with given Name"+name+" ");
 	}
 	@RequestMapping(value="/search",method = RequestMethod.GET)
 	public Product searchProduct(@RequestParam("name") String name) {
@@ -54,12 +56,17 @@ public class ProductController {
 				return product;
 			}
 		}
-		return null;
+		throw new ProductNotFound("product not found with given text"+name+" ");
 	}
 	@RequestMapping(value="/products", method = RequestMethod.POST)
 	public List<Product> addProduct(@RequestBody Product product){
-		products.add(product);
-		return products;
+		if(product!=null&&product.getName()!=null) {
+			products.add(product);
+			return products;
+		}else {
+			throw new InvalidProductException("Product cannot be added ! Required fields are missing");
+		}
+			
 	}
 	
 	@RequestMapping(value="/products", method = RequestMethod.PUT)
@@ -71,7 +78,7 @@ public class ProductController {
 			}
 			
 		}
-		return null;
+		throw new ProductNotFound("Product cannot be updated! Product not found with given ID"+product.getId());
 	}
 	
 	@RequestMapping(value="/products/{id}", method = RequestMethod.DELETE)
@@ -84,7 +91,7 @@ public class ProductController {
 			}
 			
 		}
-		return null;
+		throw new ProductNotFound("Product not found with given id, Hence Product cannot be deleted"+id);
 	}
 	private void addDefaultData() {
 		products.add(new Product(10001, "HP 10012RED Model laptop", 8993.994, "It is a laptop", true, new Date()));

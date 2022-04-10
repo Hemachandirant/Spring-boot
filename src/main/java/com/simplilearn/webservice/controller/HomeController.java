@@ -1,4 +1,4 @@
-package com.simplilearn.webapp.controller;
+package com.simplilearn.webservice.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

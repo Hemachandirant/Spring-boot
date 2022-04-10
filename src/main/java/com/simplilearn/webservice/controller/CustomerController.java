@@ -1,4 +1,4 @@
-package com.simplilearn.webapp.controller;
+package com.simplilearn.webservice.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.simplilearn.webapp.entity.Customer;
+import com.simplilearn.webservice.entity.Customer;
 
 @RestController
 public class CustomerController {

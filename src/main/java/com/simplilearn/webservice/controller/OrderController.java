@@ -1,4 +1,4 @@
-package com.simplilearn.webapp.controller;
+package com.simplilearn.webservice.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.simplilearn.webapp.entity.Order;
+import com.simplilearn.webservice.entity.Order;
+import com.simplilearn.webservice.exception.InvalidOrderException;
+import com.simplilearn.webservice.exception.OrderNotFound;
+import com.simplilearn.webservice.exception.ProductNotFound;
 
 @RestController
 public class OrderController {
@@ -33,7 +36,7 @@ public class OrderController {
 			}
 			
 		}
-		return null;
+		throw new OrderNotFound("Order is not found with given ID"+id);
 	}
 	@RequestMapping(value="/order", method = RequestMethod.GET)
 	public Order getOrders(@RequestParam("label") String label) {
@@ -42,7 +45,7 @@ public class OrderController {
 				return order;
 			}
 		}
-		return null;
+		throw new OrderNotFound("order not found with given label"+label);
 	}
 	
 	@RequestMapping(value = "/searchOrder", method = RequestMethod.GET)
@@ -52,13 +55,18 @@ public class OrderController {
 				return order;
 			}
 		}
-		return null;
+		throw new OrderNotFound("order not found with given text"+label);
 	}
 	
 	@RequestMapping(value = "/orders", method = RequestMethod.POST)
 	public List<Order> addOrders(@RequestBody Order order){
-		orders.add(order);
-		return orders;
+		if(order.getId()!=0 && order.getLabel()!=null) {
+			orders.add(order);
+			return orders;
+		}else {
+			throw new InvalidOrderException("Order cannot be added ! Required fields are missing");
+		}
+		
 	}
 	
 	@RequestMapping(value="/orders", method = RequestMethod.PUT)
@@ -70,7 +78,7 @@ public class OrderController {
 			}
 			
 		}
-		return null;
+		throw new OrderNotFound("order cannnot be updated"+order.getId());
 	}
 	
 	@RequestMapping(value="/orders/{id}", method = RequestMethod.DELETE)
@@ -82,7 +90,7 @@ public class OrderController {
 				return remove;
 			}
 		}
-		return null;
+		throw new OrderNotFound("order cannnot be Deleted"+id);
 		
 	}
 	
