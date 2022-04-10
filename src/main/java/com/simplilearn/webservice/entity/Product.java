@@ -2,13 +2,39 @@ package com.simplilearn.webservice.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="product_data")
 public class Product {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="product_id")
 	private int id;
+	
+	@Column(name="product_name")
 	private String name;
+	
+	@Column(name="product_price")
 	private double price;
+	
+	@Column(name="product_description")
 	private String description;
+	
+	@Column(name="product_available")
 	private boolean isAvailable;
+	
+	@Column(name="created_at")
 	private Date createAt;
+	
+	public Product() {}
 	
 	public Product(int id, String name, double price, String description, boolean isAvailable, Date createAt) {
 		super();

@@ -1,12 +1,34 @@
 package com.simplilearn.webservice.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="customer_data")
 public class Customer {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "customer_id")
 	private int id;
+	
+	@Column(name="customer_name")
 	private String name;
+	
+	@Column(name="customer_email")
 	private String email;
+	
+	@Column(name="customer_phone")
 	private int phone;
+	
+	@Column(name="customer_address")
 	private String address;
+	
+	public Customer() {}
 	public Customer(int id, String name, String email, int phone, String address) {
 		super();
 		this.id = id;

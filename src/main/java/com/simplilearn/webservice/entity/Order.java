@@ -1,13 +1,38 @@
 package com.simplilearn.webservice.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="order_data")
 public class Order {
 	// id, label, address, phone , email, details, etc.
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="order_id")
 	private int id;
+	
+	@Column(name="order_label")
 	private String label;
+	
+	@Column(name="order_address")
 	private String address;
+	
+	@Column(name="order_phone")
 	private int phone;
+	
+	@Column(name="order_email")
 	private String email;
+	
+	@Column(name="order_details")
 	private String details;
+	
+	public Order() {}
 	
 	public Order(int id, String label, String address, int phone, String email, String details) {
 		super();
